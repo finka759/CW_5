@@ -5,7 +5,7 @@ from abstract_head_hunter_api import AbstractHeadHunrterApi
 
 class HeadHunrterApi(AbstractHeadHunrterApi):
 
-    def __init__(self, base_url: str = 'https://api.hh.ru'):
+    def __init__(self):
         self.base_url = 'https://api.hh.ru'
 
     def get_vacancies(self, search_query: str, salary):
@@ -15,6 +15,7 @@ class HeadHunrterApi(AbstractHeadHunrterApi):
         params = {
             'area': 113,  # Поиск в зоне 113 Pjccbz
             'text': search_query,  # Поисковый запрос
+            'salary': salary,
             'page': 0,
             'per_page': 100
         }

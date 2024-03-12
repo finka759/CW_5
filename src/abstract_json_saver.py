@@ -1,10 +1,9 @@
 import os
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 
 
 class AbstractJsonSaver:
     way_to_json = os.path.join('..', 'data', 'hh_data.json')
-
     @abstractmethod
     def save_file(self, data: list):
         pass

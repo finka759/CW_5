@@ -57,8 +57,10 @@ class Vacancy(AbstractVacancy, ABC):
         self.published_at = published_at
 
     def __str__(self):
-        return f"id выкансии - {self.vacancy_id}\n Мин.зарплата - {self.salary_from}\nСсылка - {self.alternate_url}\nОпубликована - {self.published_at}\n"
+        return (f"id выкансии - {self.vacancy_id}\nМин.зарплата - {self.salary_from}\nСсылка - {self.alternate_url}\n"
+                f"Опубликована - {self.published_at}\n")
 
     def __lt__(self, other):
         if other.salary_from < self.salary_from:
             return True
+        return False
