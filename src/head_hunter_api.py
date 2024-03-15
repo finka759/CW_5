@@ -1,3 +1,5 @@
+import json
+
 import requests
 
 from abstract_head_hunter_api import AbstractHeadHunrterApi
@@ -5,8 +7,30 @@ from abstract_head_hunter_api import AbstractHeadHunrterApi
 
 class HeadHunrterApi(AbstractHeadHunrterApi):
 
-    def __init__(self):
-        self.base_url = 'https://api.hh.ru'
+    @staticmethod
+    def get_areas():
+        req = requests.get('https://api.hh.ru/areas')
+        data = req.content.decode()
+        req.close()
+        jsObj = json.loads(data)
+        areas = []
+        for k in jsObj:
+            for i in range(len(k['areas'])):
+                if len(k['areas'][i]['areas']) != 0:  # Если у зоны есть внутренние зоны
+                    for j in range(len(k['areas'][i]['areas'])):
+                        areas.append([k['id'],
+                                      k['name'],
+                                      k['areas'][i]['areas'][j]['id'],
+                                      k['areas'][i]['areas'][j]['name']])
+                else:  # Если у зоны нет внутренних зон
+                    areas.append([k['id'],
+                                  k['name'],
+                                  k['areas'][i]['id'],
+                                  k['areas'][i]['name']])
+        return areas
+
+    def __init__(self, base_url: str = 'https://api.hh.ru'):
+        self.base_url = base_url
 
     def get_vacancies(self, search_query: str, salary):
         vacancies_url_list = (self.base_url, 'vacancies')
@@ -24,4 +48,5 @@ class HeadHunrterApi(AbstractHeadHunrterApi):
 
         data_ = req.json()
         req.close()
+
         return data_['items']

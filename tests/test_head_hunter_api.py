@@ -4,9 +4,16 @@ from src.head_hunter_api import HeadHunrterApi
 
 
 @pytest.fixture
-def class_head_hunter_api():
+def class_hh_api1():
     return HeadHunrterApi()
 
 
-def test___init__(class_head_hunter_api):
-    assert class_head_hunter_api.base_url == 'https://api.hh.ru'
+@pytest.fixture
+def class_hh_api2():
+    return HeadHunrterApi()
+
+
+def test_init(class_hh_api1):
+    assert class_hh_api1.base_url == 'https://api.hh.ru'
+
+

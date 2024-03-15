@@ -1,9 +1,9 @@
-import os
-from abc import abstractmethod
+
+from abc import abstractmethod, ABC
 
 
-class AbstractJsonSaver:
-    way_to_json = os.path.join('..', 'data', 'hh_data.json')
+class AbstractJsonSaver(ABC):
+
     @abstractmethod
     def save_file(self, data: list):
         pass
@@ -13,7 +13,7 @@ class AbstractJsonSaver:
         pass
 
     @abstractmethod
-    def add_vacancy(self):
+    def add_vacancy_to_file(self):
         pass
 
     @abstractmethod
