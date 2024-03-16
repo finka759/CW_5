@@ -2,7 +2,7 @@ import json
 
 import requests
 
-from abstract_head_hunter_api import AbstractHeadHunrterApi
+from src.abstract_head_hunter_api import AbstractHeadHunrterApi
 
 
 class HeadHunrterApi(AbstractHeadHunrterApi):
@@ -35,6 +35,7 @@ class HeadHunrterApi(AbstractHeadHunrterApi):
     def get_vacancies(self, search_query: str, salary):
         vacancies_url_list = (self.base_url, 'vacancies')
         vacancies_url = '/'.join(vacancies_url_list)
+
 
         params = {
             'area': 113,  # Поиск в зоне 113 Pjccbz
