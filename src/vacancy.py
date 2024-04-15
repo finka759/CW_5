@@ -84,8 +84,12 @@ class Vacancy(AbstractVacancy):
         self.employer_name = employer_name
 
     def __str__(self):
-        return (f"id выкансии - {self.vacancy_id}\nМин.зарплата - {self.salary_from}\nСсылка - {self.alternate_url}\n"
-                f"Опубликована - {self.published_at}\nРегион - {self.area_name} (id - {self.area_id})\nРаботодатель - {self.employer_name} (id - {self.employer_id})\n")
+        return (f"id выкансии - {self.vacancy_id}\n"
+                f"Мин.зарплата - {self.salary_from}\n"
+                f"Ссылка - {self.alternate_url}\n"
+                f"Опубликована - {self.published_at}\n"
+                f"Регион - {self.area_name} (id - {self.area_id})\n"
+                f"Работодатель - {self.employer_name} (id - {self.employer_id})\n")
 
     def __lt__(self, other):
         if other.salary_from < self.salary_from:
