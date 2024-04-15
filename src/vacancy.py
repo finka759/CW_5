@@ -18,8 +18,10 @@ class Vacancy(AbstractVacancy):
 
             item_area_id = item.get('area', {}).get('id', None)
             item_area_name = item.get('area', {}).get('name', None)
+            item_employer_id = item.get('employer', {}).get('id', None)
+            item_employer_name = item.get('employer', {}).get('name', None)
             vacancies_list.append(Vacancy(item['id'], item['name'], item['alternate_url'], item['published_at'],
-                                          salary_from, item_area_id, item_area_name))
+                                          salary_from, item_area_id, item_area_name, item_employer_id, item_employer_name))
         return vacancies_list
 
     @staticmethod
@@ -69,7 +71,8 @@ class Vacancy(AbstractVacancy):
         return vacancies_in_region
 
     def __init__(self, vacancy_id: str, name: str, alternate_url: str, published_at: str = None,
-                 salary_from: int = 0, area_id: str = None, area_name: str = None):
+                 salary_from: int = 0, area_id: str = None, area_name: str = None, employer_id: str = None,
+                 employer_name: str = None):
         self.vacancy_id = vacancy_id
         self.name = name
         self.alternate_url = alternate_url
@@ -77,10 +80,12 @@ class Vacancy(AbstractVacancy):
         self.published_at = published_at
         self.area_id = area_id
         self.area_name = area_name
+        self.employer_id = employer_id
+        self.employer_name = employer_name
 
     def __str__(self):
         return (f"id выкансии - {self.vacancy_id}\nМин.зарплата - {self.salary_from}\nСсылка - {self.alternate_url}\n"
-                f"Опубликована - {self.published_at}\nРегион - {self.area_name} (id - {self.area_id})\n")
+                f"Опубликована - {self.published_at}\nРегион - {self.area_name} (id - {self.area_id})\nРаботодатель - {self.employer_name} (id - {self.employer_id})\n")
 
     def __lt__(self, other):
         if other.salary_from < self.salary_from:
