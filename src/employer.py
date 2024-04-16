@@ -33,17 +33,27 @@ class Employer:
     def get_employers_data(top_emloyers_list) -> list[dict[str, Any]]:
         Employer.print_employers(top_emloyers_list)
         data = []
-        vacancies_for_employer_data = []
-        next_page_token = None
         hh_api_2 = HeadHunrterApi()
         for employer in top_emloyers_list:
-
             employer_data = hh_api_2.get_employer(employer.employer_id)
+            # print(employer_data)
             page = '0'
-            while True:
+            pages = '1'
+            vacancies_for_employer_data = []
+            while int(page) < int(pages):
                 response = hh_api_2.get_vacancies_for_employer(employer.employer_id, page)
-                print(response)
+                # print(response)
+                page = str(int(response['page'])+1)
+                pages = response['pages']
                 vacancies_for_employer_data.extend(response['items'])
+            # print(vacancies_for_employer_data)
+            # print(len(vacancies_for_employer_data))
+
+            data.append({
+                'employer':employer_data,
+                'vacancies': vacancies_for_employer_data
+            })
+        return data
 
 
 
