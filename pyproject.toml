@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "kw-4"
+name = "CW-5"
 version = "0.1.0"
-description = "KW_4"
+description = "CW_5"
 authors = ["finka759 <finka759@gmail.com>"]
 readme = "README.md"
 
