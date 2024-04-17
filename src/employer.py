@@ -13,10 +13,11 @@ class Employer:
         top_employers = []
         count: int = 0
         while len(top_employers) < limit_:
-            if Employer(vacancies_list[count].employer_id, vacancies_list[count].employer_name) not in top_employers:
-                top_employers.append(Employer(vacancies_list[count].employer_id, vacancies_list[count].employer_name))
+            if vacancies_list[count].employer_id is not None:
+                if Employer(vacancies_list[count].employer_id, vacancies_list[count].employer_name) not in top_employers:
+                    top_employers.append(Employer(vacancies_list[count].employer_id, vacancies_list[count].employer_name))
 
-                count += 1
+            count += 1
 
         return top_employers
 
