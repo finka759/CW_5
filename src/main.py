@@ -30,13 +30,13 @@ def main():
 
     sorted_vacancies_list = Vacancy.sort_vacancies(vacancies_list)
 
-    top_emloyers_list = Employer.generate_emloyers_list_from_vacancies_list(sorted_vacancies_list, 2)
+    top_emloyers_list = Employer.generate_emloyers_list_from_vacancies_list(sorted_vacancies_list, limit)
     print('')
     print('Выбраны работодатели:')
     print('---------------------')
     Employer.print_employers(top_emloyers_list)
-    data = Employer.get_employers_data(top_emloyers_list)
 
+    data = Employer.get_employers_data(top_emloyers_list)
 
     params = config()
     dm_manager_top_employers = DBManager('top_employers', params)
