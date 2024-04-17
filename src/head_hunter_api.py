@@ -36,7 +36,6 @@ class HeadHunrterApi(AbstractHeadHunrterApi):
         vacancies_url_list = (self.base_url, 'vacancies')
         vacancies_url = '/'.join(vacancies_url_list)
 
-
         params = {
             'area': 113,  # Поиск в зоне 113 Pjccbz
             'text': search_query,  # Поисковый запрос
@@ -51,3 +50,29 @@ class HeadHunrterApi(AbstractHeadHunrterApi):
         req.close()
 
         return data_['items']
+
+    def get_vacancies_for_employer(self, employer_id, page: str = '0'):
+        vacancies_url_list = (self.base_url, 'vacancies')
+        vacancies_url = '/'.join(vacancies_url_list)
+
+        params = {
+            'employer_id': employer_id,
+            'page': int(page)
+        }
+
+        print(requests.get(vacancies_url, params))
+        req = requests.get(vacancies_url, params)
+
+        data_ = req.json()
+        req.close()
+
+        return data_
+
+    def get_employer(self, employer_id: str):
+        employer_url_list = (self.base_url, 'employers', employer_id)
+        employer_url = '/'.join(employer_url_list)
+        req = requests.get(employer_url)
+        data_ = req.json()
+        req.close()
+
+        return data_

@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "kw-4"
+name = "CW-5"
 version = "0.1.0"
-description = "KW_4"
+description = "CW_5"
 authors = ["finka759 <finka759@gmail.com>"]
 readme = "README.md"
 
@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.12"
 pytest = "^8.0.2"
 requests = "^2.31.0"
+psycopg2 = "^2.9.9"
 
 
 [build-system]
