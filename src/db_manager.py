@@ -21,15 +21,15 @@ class DBManager:
 
         create_employers = "CREATE TABLE employers (\
                                            employer_id int UNIQUE PRIMARY KEY,\
-                                           name varchar(200) NOT NULL,\
-                                           url varchar(200) NOT NULL,\
+                                           employer_name varchar(200) NOT NULL,\
+                                           employer_url varchar(200) NOT NULL,\
                                            vacancies_url varchar(250) NOT NULL\
                                            );"
 
         create_vacancy = "CREATE TABLE vacancies (\
                                            vacancy_id int UNIQUE PRIMARY KEY,\
-                                           name varchar(200) NOT NULL,\
-                                           url varchar(200) NOT NULL,\
+                                           vacancy_name varchar(200) NOT NULL,\
+                                           vacancy_url varchar(200) NOT NULL,\
                                            salary int,\
                                            employer_id int REFERENCES employers(employer_id),\
                                            requirements text\
@@ -53,7 +53,7 @@ class DBManager:
                 empr_data = employer['employer']
                 cur.execute(
                     """
-                    INSERT INTO employers (employer_id, name, url, vacancies_url)
+                    INSERT INTO employers (employer_id, employer_name, employer_url, vacancies_url)
                     VALUES (%s, %s, %s, %s)                    
                     """,
                     (empr_data['id'], empr_data['name'], empr_data['site_url'],empr_data['vacancies_url'])
@@ -72,7 +72,7 @@ class DBManager:
                     if salary_from > 0:#добавляем в БД вакансии только с указанной мин зарплатой
                         cur.execute(
                             """
-                            INSERT INTO vacancies (vacancy_id, name, url, salary, employer_id, requirements)
+                            INSERT INTO vacancies (vacancy_id, vacancy_name, vacancy_url, salary, employer_id, requirements)
                             VALUES (%s, %s, %s, %s, %s, %s)
                             """,
                             (vacy_data['id'], vacy_data['name'], vacy_data['url'], salary_from,
@@ -90,7 +90,7 @@ class DBManager:
         '''
         with psycopg2.connect(dbname=self.database_name, **self.params) as conn:
             with conn.cursor() as cur:
-                cur.execute("SELECT employer_id, employers.name, COUNT(*) AS vacancies_count FROM vacancies RIGHT "
+                cur.execute("SELECT employer_id, employer_name, COUNT(*) AS vacancies_count FROM vacancies RIGHT "
                             "JOIN employers USING(employer_id) GROUP BY employer_id;")
                 rows = cur.fetchall()
                 for row in rows:
@@ -103,7 +103,7 @@ class DBManager:
         with psycopg2.connect(dbname=self.database_name, **self.params) as conn:
             with conn.cursor() as cur:
                 cur.execute(
-                    "SELECT  vacancy_id, vacancies.name, requirements, vacancies.url, salary, employers.name AS "
+                    "SELECT  vacancy_id, vacancy_name, requirements, vacancy_url, salary, employer_name AS "
                     "company FROM vacancies JOIN employers USING(employer_id);")
                 rows = cur.fetchall()
                 for row in rows:
@@ -140,10 +140,8 @@ class DBManager:
         '''
         with psycopg2.connect(dbname=self.database_name, **self.params) as conn:
             with conn.cursor() as cur:
-                cur.execute("""
-                    SELECT * FROM vacancies
-                    WHERE vacancy_name like %s
-                """, (f"%{keyword}%)",))
+                cur.execute(f" SELECT * FROM vacancies WHERE vacancy_name ILIKE \'%{keyword}%\' ;")
                 rows = cur.fetchall()
                 for row in rows:
                     print(row)
+
